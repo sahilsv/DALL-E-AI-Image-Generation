@@ -18,9 +18,8 @@ const CreatePost = () => {
   const [generatingImg, setGeneratingImg] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => 
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  
 
   const handleSurpriseMe = () => {
     const randomPrompt = getRandomPrompt(form.prompt);
@@ -31,7 +30,7 @@ const CreatePost = () => {
     if (form.prompt) {
       try {
         setGeneratingImg(true);
-        const response = await fetch("http://localhost:8800/api/v1/dalle", {
+        const response = await fetch("https://dalle-d60s.onrender.com/api/v1/dalle", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -59,12 +58,12 @@ const CreatePost = () => {
       setLoading(true);
 
       try {
-        const response = await fetch("http://localhost:8800/api/v1/post", {
-          method: 'POST',
+        const response = await fetch("https://dalle-d60s.onrender.com/api/v1/post", {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(form),
+          body: JSON.stringify({ ...form }),
         });
 
         await response.json();
@@ -79,8 +78,6 @@ const CreatePost = () => {
       alert("Please enter a prompt and generate an image");
     }
   };
-
-
 
   return (
     <section className="max-w-7xl mx-auto">
